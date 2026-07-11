@@ -1,12 +1,62 @@
 ---
 import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Stats from '../components/Stats.astro';
+import CTABand from '../components/CTABand.astro';
+import { SERVICES } from '../data/services';
+import { SITE } from '../data/site';
 ---
 <Base
   title="ShoreBridge BPO — Outsourced Teams in Dhaka, Bangladesh"
-  description="Dedicated call center, creative, healthcare back-office and data teams in Bangladesh for US and BD companies."
+  description="Dedicated call center, creative, healthcare back-office and data teams in Bangladesh for US and BD companies. US-hours coverage at up to 60% savings."
   path="/"
 >
-  <section class="section center container">
-    <h1>ShoreBridge</h1>
+  <Hero
+    title="Your team. On the other shore."
+    sub="US-quality call center, creative, and back-office teams in Dhaka — at up to 60% less than US cost."
+  />
+
+  <Stats
+    items={[
+      { big: '24/7', small: 'US-hours coverage' },
+      { big: '60%', small: 'typical cost savings' },
+      { big: '4', small: 'service lines' },
+    ]}
+  />
+
+  <section class="section container center">
+    <p class="subtitle narrow">
+      ShoreBridge BPO is an outsourcing company in Dhaka, Bangladesh. We build dedicated
+      call center, design and video editing, healthcare back-office, and data teams for
+      companies in the United States and Bangladesh.
+    </p>
   </section>
+
+  <section class="container" style="padding-bottom: 120px;">
+    <h2 class="center" style="margin-bottom: 40px;">What we do</h2>
+    <div class="grid-2">
+      {SERVICES.map((svc) => (
+        <a class="card card-link" href={`/services/${svc.slug}/`}>
+          <h3>{svc.name}</h3>
+          <p>{svc.pitch}</p>
+          <span class="price">from {svc.price}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <div class="band">
+    <section class="section container center">
+      <p class="label">Founder</p>
+      <h2 style="margin: 12px 0;">Built by an operator, not a broker.</h2>
+      <p class="subtitle narrow">
+        ShoreBridge was founded by {SITE.founder}, who has managed offshore call-center
+        and back-office operations serving US hotels and clinics.
+        [PLACEHOLDER: confirm founder bio facts + photo]
+      </p>
+      <p style="margin-top: 20px;"><a class="btn-link" href="/about/">Meet the founder ›</a></p>
+    </section>
+  </div>
+
+  <CTABand />
 </Base>
