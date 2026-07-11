@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+
+const businessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "ShoreBridge BPO",
+  url: SITE.url,
+  email: SITE.email,
+  telephone: SITE.phone,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: SITE.address.street,
+    addressLocality: SITE.address.city,
+    addressCountry: SITE.address.country,
+  },
+  openingHours: "Mo-Fr 09:00-18:00",
+};
+---
+<Base
+  title="Contact ShoreBridge BPO — Get a Quote"
+  description="Tell us what team you need. ShoreBridge replies within one business day — email, form, or WhatsApp."
+  path="/contact/"
+  schema={[businessSchema]}
+>
+  <section class="section container center">
+    <h1>Let's talk.</h1>
+    <p class="subtitle narrow" style="margin-top: 20px;">
+      Tell us what you need. We reply within one business day —
+      and we work US hours, so evening in Dhaka is morning in Dallas.
+    </p>
+  </section>
+
+  <section class="container contact-grid" style="padding-bottom: 120px;">
+    <div>
+      <h2 style="font-size: 28px;">Send a message</h2>
+      <form class="contact" action="https://api.web3forms.com/submit" method="POST" style="margin-top: 24px;">
+        <input type="hidden" name="access_key" value="PLACEHOLDER-WEB3FORMS-KEY" />
+        <input type="text" name="name" placeholder="Your name" required />
+        <input type="email" name="email" placeholder="Work email" required />
+        <input type="text" name="company" placeholder="Company" />
+        <textarea name="message" rows="5" placeholder="What kind of team do you need?" required></textarea>
+        <button class="btn" type="submit">Send message</button>
+      </form>
+    </div>
+    <div>
+      <h2 style="font-size: 28px;">Other ways</h2>
+      <ul style="list-style: none; margin-top: 24px; display: grid; gap: 16px;">
+        <li><b>WhatsApp:</b> <a href={SITE.whatsapp}>Chat with us ›</a></li>
+        <li><b>Email:</b> <a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+        <li><b>Phone:</b> {SITE.phone}</li>
+        <li><b>Office:</b> {SITE.address.street}, {SITE.address.city}, Bangladesh</li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+  @media (max-width: 720px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>

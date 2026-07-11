@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import CTABand from '../components/CTABand.astro';
+import { SITE } from '../data/site';
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: SITE.founder,
+  jobTitle: "Founder & CEO",
+  url: SITE.url + "/about/",
+  worksFor: { "@type": "Organization", name: "ShoreBridge BPO", url: SITE.url },
+  sameAs: [
+    "https://github.com/rifathazim",
+    "[PLACEHOLDER: LinkedIn URL]",
+  ],
+};
+---
+<Base
+  title="About the Founder — S. M. Ruhul Azim Rifath | ShoreBridge BPO"
+  description="ShoreBridge BPO was founded in Dhaka by S. M. Ruhul Azim Rifath, an operator with hands-on experience running US-facing call-center and back-office teams."
+  path="/about/"
+  schema={[personSchema]}
+>
+  <section class="section container center">
+    <h1>The person behind ShoreBridge.</h1>
+    <p class="subtitle narrow" style="margin-top: 20px;">
+      Most outsourcing firms are sales fronts. ShoreBridge is run by the person who
+      actually builds and manages your team.
+    </p>
+  </section>
+
+  <section class="container" style="padding-bottom: 80px; max-width: 680px;">
+    <div class="card center" style="margin-bottom: 48px;">
+      <p style="color: var(--ink-2);">[PLACEHOLDER: founder photo]</p>
+    </div>
+
+    <h2>S. M. Ruhul Azim Rifath</h2>
+    <p style="margin-top: 16px;">
+      I'm {SITE.founder}, founder of ShoreBridge BPO. Before starting ShoreBridge, I managed
+      offshore call-center and back-office operations in Dhaka serving US businesses —
+      including hotel front-desk support lines and clinic administration.
+      [PLACEHOLDER: confirm bio facts — years, roles, scope]
+    </p>
+    <p style="margin-top: 16px;">
+      I started ShoreBridge because I kept seeing the same gap: US companies want offshore
+      teams but can't see who they're really hiring, and talented people in Dhaka do
+      excellent work behind brokers who add cost without adding value. ShoreBridge removes
+      the middle layer. You deal with me, and you meet every person on your team.
+    </p>
+    <p style="margin-top: 16px;">
+      My background is operations, not sales — team building, quality monitoring, and
+      network infrastructure. [PLACEHOLDER: confirm technical credentials]
+    </p>
+
+    <h2 style="margin-top: 64px;">Company facts</h2>
+    <ul class="checks">
+      <li>Founded 2026 in Dhaka, Bangladesh</li>
+      <li>Four service lines: call center, creative, healthcare back-office, data &amp; VAs</li>
+      <li>Serves companies in the United States and Bangladesh</li>
+      <li>Founder-managed accounts — no layers between you and your team</li>
+    </ul>
+  </section>
+
+  <CTABand />
+</Base>
