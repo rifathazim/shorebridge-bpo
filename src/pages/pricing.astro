@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import CTABand from '../components/CTABand.astro';
+import { SERVICES } from '../data/services';
+
+const drivers = [
+  { h: 'Experience level', p: 'A junior data-entry operator and a senior video editor sit at opposite ends of a range. You choose the seniority mix for your team.' },
+  { h: 'Shift', p: 'US-hours (Dhaka night) shifts carry a small premium over Dhaka daytime work. Creative and data work usually runs daytime — the time difference still delivers overnight turnaround.' },
+  { h: 'Team size', p: 'Rates soften as your team grows. A single agent pays list rate; a five-seat team earns a volume discount.' },
+  { h: 'Commitment', p: 'Month-to-month is standard. Longer commitments earn better rates but are never required.' },
+];
+---
+<Base
+  title="BPO Pricing in Bangladesh — Real Hourly Rates | ShoreBridge"
+  description="What outsourced teams in Bangladesh actually cost: call center $6–9/hr, creative $8–15/hr, healthcare admin $7–10/hr, back-office $4–7/hr."
+  path="/pricing/"
+>
+  <section class="section container center">
+    <h1>Honest BPO pricing.</h1>
+    <p class="subtitle narrow" style="margin-top: 20px;">
+      Most BPO companies hide their rates. Here is what ShoreBridge teams actually cost
+      per hour, per dedicated staff member, billed monthly. [PLACEHOLDER: confirm all rates]
+    </p>
+  </section>
+
+  <section class="container" style="padding-bottom: 80px;">
+    <div class="table-scroll">
+      <table class="pricing">
+        <thead>
+          <tr><th>Service</th><th>Hourly rate</th><th>What drives the range</th></tr>
+        </thead>
+        <tbody>
+          {SERVICES.map((svc) => (
+            <tr>
+              <td><a href={`/services/${svc.slug}/`}>{svc.name}</a></td>
+              <td class="rate">{svc.price.replace(/ per .*/, '')}/hr</td>
+              <td>Experience level, shift (US-hours vs Dhaka daytime), and team size.</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p style="color: var(--ink-2); font-size: 15px;">
+      No setup fees. No long-term lock-in. [PLACEHOLDER: confirm terms]
+    </p>
+
+    <h2 style="margin-top: 72px;">What affects your price</h2>
+    <div class="grid-2" style="margin-top: 32px;">
+      {drivers.map((d) => (
+        <div class="card">
+          <h3>{d.h}</h3>
+          <p>{d.p}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <CTABand />
+</Base>
