@@ -1,0 +1,56 @@
+---
+import Hero from '../components/Hero.astro';
+import FAQ from '../components/FAQ.astro';
+import CTABand from '../components/CTABand.astro';
+import type { Svc } from '../data/services';
+
+interface Props {
+  svc: Svc;
+}
+const { svc } = Astro.props;
+
+const steps = [
+  { n: '01', h: 'Discovery call', p: 'Thirty minutes on what you need: roles, hours, tools, and volume. You get a plan and a firm quote.' },
+  { n: '02', h: 'We recruit and train your team', p: 'We shortlist, you approve. Your team trains on your product, tools, and standards before touching real work.' },
+  { n: '03', h: 'You go live', p: 'Supervised ramp-up, then steady state with US-hours coverage and a weekly report from your team lead.' },
+];
+---
+<Hero title={svc.h1} sub={svc.answer} />
+
+<section class="container" style="padding-bottom: 80px;">
+  <h2>What's included</h2>
+  <ul class="checks">
+    {svc.included.map((item) => <li>{item}</li>)}
+  </ul>
+
+  <h2 style="margin-top: 64px;">How it works</h2>
+  <div class="steps">
+    {steps.map((s) => (
+      <div class="step">
+        <span class="num">{s.n}</span>
+        <h3>{s.h}</h3>
+        <p>{s.p}</p>
+      </div>
+    ))}
+  </div>
+
+  <p style="margin-top: 32px; font-size: 21px;">
+    Typical range: <b>{svc.price}</b>. <a href="/pricing/">See full pricing ›</a>
+  </p>
+
+  <h2 style="margin-top: 64px;">Why Bangladesh?</h2>
+  <p style="margin-top: 16px; max-width: 680px; color: var(--ink-2);">
+    Bangladesh has one of the largest English-proficient workforces in South Asia, at labor
+    costs roughly 60% below US equivalents — and typically below the Philippines. The time
+    zone works in your favor twice: night shifts in Dhaka cover US business hours live, and
+    daytime work in Dhaka means projects briefed in your evening are done by your morning.
+  </p>
+</section>
+
+<div class="band">
+  <section class="section container">
+    <FAQ items={svc.faq} />
+  </section>
+</div>
+
+<CTABand />
