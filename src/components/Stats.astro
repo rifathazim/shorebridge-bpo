@@ -1,0 +1,16 @@
+---
+interface Props {
+  items: { big: string; small: string }[];
+}
+const { items } = Astro.props;
+---
+<div class="band">
+  <div class="stats">
+    {items.map((s) => (
+      <div>
+        <b>{s.big}</b>
+        <span>{s.small}</span>
+      </div>
+    ))}
+  </div>
+</div>

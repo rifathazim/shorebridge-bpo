@@ -1,0 +1,74 @@
+---
+import { SITE, NAV } from '../data/site';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  schema?: object[];
+}
+
+const { title, description, path, schema = [] } = Astro.props;
+const canonical = SITE.url + path;
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "ShoreBridge BPO",
+  url: SITE.url,
+  email: SITE.email,
+  logo: SITE.url + "/favicon.svg",
+  founder: { "@type": "Person", name: SITE.founder, url: SITE.url + "/about/" },
+  address: { "@type": "PostalAddress", addressLocality: "Dhaka", addressCountry: "BD" },
+  description: "Outsourced call center, creative, healthcare back-office and data teams in Dhaka, Bangladesh for US and Bangladeshi companies.",
+};
+
+const allSchema = [orgSchema, ...schema];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href="/fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={SITE.url + "/og.png"} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={SITE.url + "/og.png"} />
+    {allSchema.map((s) => (
+      <script type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
+  </head>
+  <body>
+    <header class="site">
+      <div class="inner">
+        <a class="wordmark" href="/">ShoreBridge</a>
+        <nav>
+          {NAV.map((item) => <a href={item.href}>{item.label}</a>)}
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site">
+      <div class="container">
+        <nav>
+          {NAV.map((item) => <a href={item.href}>{item.label}</a>)}
+        </nav>
+        <p>© {new Date().getFullYear()} {SITE.name} · Dhaka, Bangladesh · Founded by {SITE.founder}</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+---
+interface Props {
+  title: string;
+  sub: string;
+  ctaText?: string;
+  ctaHref?: string;
+}
+const { title, sub, ctaText = "Get a quote", ctaHref = "/contact/" } = Astro.props;
+---
+<section class="section center container">
+  <h1>{title}</h1>
+  <p class="subtitle narrow" style="margin-top: 20px;">{sub}</p>
+  <p style="margin-top: 28px;">
+    <a class="btn" href={ctaHref}>{ctaText}</a>
+    <a class="btn-link" href="/pricing/" style="margin-left: 20px;">See pricing ›</a>
+  </p>
+</section>
