@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+<Base
+  title="Blog — Straight Answers About Outsourcing | ShoreBridge BPO"
+  description="Real costs, honest comparisons, and practical guides on outsourcing to Bangladesh — written by people who run the teams."
+  path="/blog/"
+>
+  <section class="section container center">
+    <h1>Straight answers.</h1>
+    <p class="subtitle narrow" style="margin-top: 20px;">
+      Real costs, honest comparisons, no vendor fog.
+    </p>
+  </section>
+
+  <section class="container post-list" style="padding-bottom: 120px; max-width: 680px;">
+    {posts.map((post) => (
+      <article>
+        <p class="meta">{fmt(post.data.pubDate)}</p>
+        <h3><a href={`/blog/${post.id}/`}>{post.data.title}</a></h3>
+        <p style="color: var(--ink-2);">{post.data.description}</p>
+      </article>
+    ))}
+  </section>
+</Base>

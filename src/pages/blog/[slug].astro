@@ -1,0 +1,55 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTABand from '../../components/CTABand.astro';
+import { getCollection, render } from 'astro:content';
+import { SITE } from '../../data/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const path = `/blog/${post.id}/`;
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: post.data.updatedDate.toISOString(),
+  url: SITE.url + path,
+  author: { "@type": "Person", name: SITE.founder, url: SITE.url + "/about/" },
+  publisher: { "@type": "Organization", name: "ShoreBridge BPO", url: SITE.url },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Blog", item: SITE.url + "/blog/" },
+    { "@type": "ListItem", position: 2, name: post.data.title, item: SITE.url + path },
+  ],
+};
+---
+<Base
+  title={`${post.data.title} | ShoreBridge BPO`}
+  description={post.data.description}
+  path={path}
+  schema={[articleSchema, breadcrumbSchema]}
+>
+  <article class="section container prose">
+    <p class="post-meta">
+      Published {fmt(post.data.pubDate)} · Last updated {fmt(post.data.updatedDate)} ·
+      By {SITE.founder}
+    </p>
+    <h1 style="font-size: clamp(32px, 4.5vw, 48px); margin: 16px 0 32px;">{post.data.title}</h1>
+    <Content />
+  </article>
+  <CTABand />
+</Base>
